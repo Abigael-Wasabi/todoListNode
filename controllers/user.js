@@ -17,10 +17,9 @@ const signUp = async (req, res, next) => {
    //!the password salt should be 10 when 20 it will take a long time to hash the password */
       const hashedPassword = bcrypt.hashSync(password, 10);
       const newUser = await users.create({
-        firstname: firstname,
-        lastname: lastname, 
+        username: username,
         email: email,
-        password: hashedPassword
+        password: hashedPassword 
       });
       res.status(201).json({ message: 'User registration successful.', User: newUser });
       console.log(newUser);
@@ -50,8 +49,7 @@ const signUp = async (req, res, next) => {
         }
         const token = jwt.sign({//!func used to create a new jwt
           userID:user.userID,
-          firstname: user.firstname,
-          lastname: user.lastname,
+          username: user.username,
           email: user.email, 
         }, SECRET_KEY, { expiresIn: '1hr' });
         if (!token) {
